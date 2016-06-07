@@ -10,6 +10,11 @@ import org.bytedeco.javacv.FrameConverter;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import static org.bytedeco.javacpp.opencv_imgcodecs.imread;
 
 /**
  * @author liulongbiao
@@ -26,6 +31,26 @@ public class Helper {
 	public static String getResourcePath(String img) {
 		return Helper.class.getResource("/" + img).getPath();
 	}
+
+	/**
+	 * 加载图片
+	 *
+	 * @param file
+	 * @param flags
+	 * @return
+	 * @throws IOException
+     */
+	public static Mat load(File file, int flags) throws IOException {
+		if(!file.exists()) {
+			throw new FileNotFoundException("Image file does not exist: " + file.getAbsolutePath());
+		}
+		Mat image = imread(file.getAbsolutePath(), flags);
+		if(image == null || image.empty()) {
+			throw new IOException("Couldn't load image: " + file.getAbsolutePath());
+		}
+		return image;
+	}
+
 
 	/**
 	 * 显示图片
