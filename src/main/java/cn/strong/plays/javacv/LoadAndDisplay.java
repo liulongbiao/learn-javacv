@@ -27,10 +27,9 @@ public class LoadAndDisplay {
 		if (image.empty()) {
 			throw new RuntimeException("cannot find img " + imgName + " in classpath");
 		}
-		Helper.display(image, "a5");
-//		namedWindow(WIN_NAME, WINDOW_AUTOSIZE); // Create a window for display.
-//		imshow(WIN_NAME, image); // Show our image inside it.
-//		waitKey(0); // Wait for a keystroke in the window
+		namedWindow(WIN_NAME, WINDOW_AUTOSIZE); // Create a window for display.
+		imshow(WIN_NAME, image); // Show our image inside it.
+		waitKey(0); // Wait for a keystroke in the window
 	}
 
 }
