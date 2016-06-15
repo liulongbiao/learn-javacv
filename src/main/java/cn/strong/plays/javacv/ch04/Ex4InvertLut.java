@@ -28,6 +28,6 @@ public class Ex4InvertLut {
 
         Mat dest = Histogram1D.applyLookUp(src, lut);
 
-        Helper.display(dest, "Inverted LUT");
+        Helper.show(dest, "Inverted LUT");
     }
 }

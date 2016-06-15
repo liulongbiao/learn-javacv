@@ -39,6 +39,6 @@ public class Ex3Sharpen {
         // g过滤图像
         filter2D(image, dest, image.depth(), kernel);
 
-        Helper.display(dest, "Sharpened");
+        Helper.show(dest, "Sharpened");
     }
 }

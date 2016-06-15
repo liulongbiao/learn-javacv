@@ -19,6 +19,6 @@ public class Ex4ConvertingColorSpaces {
         detector.setColorDistanceThreshold(30);
         detector.setTargetColor(new ColorLab(74.3705, -9.0003, -25.9781));
         Mat dist = detector.process(image);
-        Helper.display(dist, "result");
+        Helper.show(dist, "result");
     }
 }

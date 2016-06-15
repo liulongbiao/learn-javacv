@@ -22,6 +22,6 @@ public class Ex2ComputeHistogramGraph {
         BufferedImage histogram = h.getHistogramImage(src);
 
         // Display the graph
-        Helper.display(histogram, "Histogram");
+        Helper.show(histogram, "Histogram");
     }
 }

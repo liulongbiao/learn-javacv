@@ -19,7 +19,7 @@ public class Ex1Salt {
     public static void main(String[] args) throws IOException {
         Mat image = Helper.load(new File("data/boldt.jpg"), IMREAD_COLOR);
         Mat dest = salt(image, 2000);
-        Helper.display(dest, "Salted");
+        Helper.show(dest, "Salted");
     }
 
     /**

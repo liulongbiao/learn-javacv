@@ -20,6 +20,6 @@ public class Ex1ColorDetector {
         detector.setTargetColor(new ColorRGB(130, 190, 230));
 
         Mat dist = detector.process(image);
-        Helper.display(dist, "result");
+        Helper.show(dist, "result");
     }
 }

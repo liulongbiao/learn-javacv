@@ -17,13 +17,13 @@ import static org.bytedeco.javacpp.opencv_imgcodecs.IMREAD_GRAYSCALE;
 public class Ex5EqualizeHistogram {
     public static void main(String[] args) throws IOException {
         Mat src = Helper.load(new File("data/group.jpg"), IMREAD_GRAYSCALE);
-        Helper.display(new Histogram1D().getHistogramImage(src), "Input histogram");
+        Helper.show(new Histogram1D().getHistogramImage(src), "Input histogram");
 
         // Apply look-up
         Mat dest = Histogram1D.equalize(src);
-        Helper.display(dest, "Equalized Histogram");
+        Helper.show(dest, "Equalized Histogram");
 
         // Show histogram of the modified image
-        Helper.display(new Histogram1D().getHistogramImage(dest), "Equalized histogram");
+        Helper.show(new Histogram1D().getHistogramImage(dest), "Equalized histogram");
     }
 }

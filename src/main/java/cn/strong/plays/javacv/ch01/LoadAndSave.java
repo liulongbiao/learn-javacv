@@ -19,11 +19,11 @@ public class LoadAndSave {
 
     public static void main(String[] args) throws IOException {
         Mat image = Helper.load(new File("data/puppy.bmp"), IMREAD_COLOR);
-        Helper.display(image, "source image");
+        Helper.show(image, "source image");
 
         Mat result = new Mat();
         flip(image, result, 1);
-        Helper.display(result, "flip image");
+        Helper.show(result, "flip image");
         imwrite("dist/puppy_flip.bmp", result);
 
         Mat image3 = image.clone();
@@ -43,6 +43,6 @@ public class LoadAndSave {
                 2, // 文本厚度
                 8, // 线条类型
                 false); // 当该值为真时，原点位于左下角，否则位于左上角
-        Helper.display(image3, "text image");
+        Helper.show(image3, "text image");
     }
 }

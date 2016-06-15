@@ -25,6 +25,6 @@ public class Ex4BlendImages {
         // Create blended image
         addWeighted(image1, 0.7, image2, 0.9, 0.0, result);
 
-        Helper.display(result, "Blended");
+        Helper.show(result, "Blended");
     }
 }

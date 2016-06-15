@@ -23,7 +23,7 @@ public class Ex3Threshold {
         Mat dest = new Mat();
         threshold(src, dest, 60, 255, THRESH_BINARY);
 
-        Helper.display(dest, "Thresholded");
+        Helper.show(dest, "Thresholded");
     }
 
 }

@@ -18,7 +18,7 @@ public class Ex2ColorReduce {
     public static void main(String[] args) throws IOException {
         Mat image = Helper.load(new File("data/boldt.jpg"), IMREAD_COLOR);
         Mat dest = colorReduce(image);
-        Helper.display(dest, "Color Reduced");
+        Helper.show(dest, "Color Reduced");
     }
 
     public static Mat colorReduce(Mat image) {

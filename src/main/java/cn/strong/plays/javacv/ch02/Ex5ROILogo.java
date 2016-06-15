@@ -26,6 +26,6 @@ public class Ex5ROILogo {
         // 组合输入图像和 logo. Mask 用于控制 blending.
         logo.copyTo(imageROI, mask);
 
-        Helper.display(image, "With Logo");
+        Helper.show(image, "With Logo");
     }
 }
