@@ -10,6 +10,7 @@ import org.bytedeco.javacv.FrameConverter;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -63,5 +64,17 @@ public class Helper {
 		canvas.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		FrameConverter<Mat> converter = new OpenCVFrameConverter.ToMat();
 		canvas.showImage(converter.convert(image));
+	}
+
+	/**
+	 * 显示图片
+	 *
+	 * @param image
+	 * @param caption
+     */
+	public static void display(Image image, String caption) {
+		CanvasFrame canvas = new CanvasFrame(caption, 1);
+		canvas.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		canvas.showImage(image);
 	}
 }
