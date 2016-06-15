@@ -15,6 +15,9 @@ import static org.bytedeco.javacpp.opencv_core.CV_8U;
 import static org.bytedeco.javacpp.opencv_imgcodecs.IMREAD_GRAYSCALE;
 
 /**
+ * 使用灰度图中某个区域的直方图作为'模板'，
+ * 查看整个图像来检测类似于该模板的像素。
+ *
  * Created by liulongbiao on 16-6-15.
  */
 public class Ex6ContentDetectionGrayscale {
