@@ -6,6 +6,17 @@ import java.util.Collection;
  * Created by liulongbiao on 16-6-16.
  */
 public class Asserts {
+
+    /**
+     * 验证对象不为 null
+     * @param obj
+     */
+    public static void notNull(Object obj) {
+        if(obj == null) {
+            throw new IllegalArgumentException();
+        }
+    }
+
     /**
      * 验证对象不为 null
      * @param obj
