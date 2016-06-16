@@ -24,6 +24,7 @@ import static org.bytedeco.javacpp.opencv_core.CV_8U;
 import static org.bytedeco.javacpp.opencv_core.minMaxLoc;
 import static org.bytedeco.javacpp.opencv_imgcodecs.IMREAD_COLOR;
 import static org.bytedeco.javacpp.opencv_imgcodecs.imread;
+import static org.bytedeco.javacpp.opencv_imgcodecs.imwrite;
 import static org.bytedeco.javacpp.opencv_imgproc.circle;
 import static org.bytedeco.javacpp.opencv_imgproc.rectangle;
 
@@ -125,6 +126,16 @@ public class Helper {
 		Mat dest = image.clone();
 		rectangle(dest, overlay, color);
 		return dest;
+	}
+
+	/**
+	 * 保存图片
+	 *
+	 * @param file
+	 * @param image
+     */
+	public static void save(File file, Mat image) {
+		imwrite(file.getAbsolutePath(), image);
 	}
 
 	/**
