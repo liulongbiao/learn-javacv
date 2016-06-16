@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static java.lang.Math.round;
+import static org.bytedeco.javacpp.opencv_imgcodecs.IMREAD_COLOR;
 import static org.bytedeco.javacpp.opencv_imgcodecs.imread;
 import static org.bytedeco.javacpp.opencv_imgproc.circle;
 import static org.bytedeco.javacpp.opencv_imgproc.rectangle;
@@ -35,6 +36,17 @@ public class Helper {
 	 */
 	public static String getResourcePath(String img) {
 		return Helper.class.getResource("/" + img).getPath();
+	}
+
+	/**
+	 * 以彩色空间加载图片
+	 *
+	 * @param file
+	 * @return
+	 * @throws IOException
+     */
+	public static Mat load(File file) throws IOException {
+		return load(file, IMREAD_COLOR);
 	}
 
 	/**
