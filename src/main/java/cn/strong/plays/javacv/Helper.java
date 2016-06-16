@@ -20,6 +20,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static java.lang.Math.round;
+import static org.bytedeco.javacpp.opencv_core.CV_8U;
+import static org.bytedeco.javacpp.opencv_core.minMaxLoc;
 import static org.bytedeco.javacpp.opencv_imgcodecs.IMREAD_COLOR;
 import static org.bytedeco.javacpp.opencv_imgcodecs.imread;
 import static org.bytedeco.javacpp.opencv_imgproc.circle;
@@ -135,5 +137,33 @@ public class Helper {
 		ToMat openCVConverter = new ToMat();
 		Java2DFrameConverter java2DConverter = new Java2DFrameConverter();
 		return java2DConverter.convert(openCVConverter.convert(mat));
+	}
+
+	public static Mat toMat8U(Mat src) {
+		return toMat8U(src, true);
+	}
+
+	/**
+	 * Convert `Mat` to one where pixels are represented as 8 bit unsigned integers (`CV_8U`).
+	 * It creates a copy of the input image.
+	 *
+	 * @param src input image.
+	 * @return copy of the input with pixels values represented as 8 bit unsigned integers.
+	 */
+	public static Mat toMat8U(Mat src, boolean doScaling) {
+		double[] min = {Double.MAX_VALUE};
+		double[] max = {Double.MIN_VALUE};
+		minMaxLoc(src, min, max, null, null, new Mat());
+		double scale = 1d;
+		double offset = 0d;
+		if (doScaling) {
+			double s = 255d / (max[0] - min[0]);
+			scale = s;
+			offset = -min[0] * s;
+		}
+
+		Mat dest = new Mat();
+		src.convertTo(dest, CV_8U, scale, offset);
+		return dest;
 	}
 }

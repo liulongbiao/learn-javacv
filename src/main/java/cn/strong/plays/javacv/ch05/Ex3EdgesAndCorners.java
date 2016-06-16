@@ -13,6 +13,8 @@ import static org.bytedeco.javacpp.opencv_imgcodecs.IMREAD_GRAYSCALE;
 import static org.bytedeco.javacpp.opencv_imgproc.*;
 
 /**
+ * 识别边角
+ *
  * Created by liulongbiao on 16-6-16.
  */
 public class Ex3EdgesAndCorners {

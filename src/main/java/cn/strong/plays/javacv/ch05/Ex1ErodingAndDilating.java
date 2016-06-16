@@ -17,6 +17,8 @@ import static org.bytedeco.javacpp.opencv_imgproc.erode;
 import static org.bytedeco.javacpp.opencv_imgproc.morphologyDefaultBorderValue;
 
 /**
+ * 使用形态学腐蚀和膨胀操作
+ *
  * Created by liulongbiao on 16-6-16.
  */
 public class Ex1ErodingAndDilating {
