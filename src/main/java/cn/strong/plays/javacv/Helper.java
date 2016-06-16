@@ -8,10 +8,13 @@ import org.bytedeco.javacpp.opencv_core.*;
 import org.bytedeco.javacpp.opencv_core.Point;
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.FrameConverter;
+import org.bytedeco.javacv.Java2DFrameConverter;
 import org.bytedeco.javacv.OpenCVFrameConverter;
+import org.bytedeco.javacv.OpenCVFrameConverter.ToMat;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -78,7 +81,7 @@ public class Helper {
 	public static void show(Mat image, String caption) {
 		CanvasFrame canvas = new CanvasFrame(caption, 1);
 		canvas.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		FrameConverter<Mat> converter = new OpenCVFrameConverter.ToMat();
+		FrameConverter<Mat> converter = new ToMat();
 		canvas.showImage(converter.convert(image));
 	}
 
@@ -120,5 +123,17 @@ public class Helper {
 		Mat dest = image.clone();
 		rectangle(dest, overlay, color);
 		return dest;
+	}
+
+	/**
+	 * 将 Mat 转换为 BufferedImage
+	 *
+	 * @param mat
+	 * @return
+     */
+	public static BufferedImage toBufferedImage(Mat mat) {
+		ToMat openCVConverter = new ToMat();
+		Java2DFrameConverter java2DConverter = new Java2DFrameConverter();
+		return java2DConverter.convert(openCVConverter.convert(mat));
 	}
 }
