@@ -3,13 +3,11 @@
  */
 package cn.strong.plays.javacv;
 
-import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacpp.opencv_core.*;
 import org.bytedeco.javacpp.opencv_core.Point;
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.FrameConverter;
 import org.bytedeco.javacv.Java2DFrameConverter;
-import org.bytedeco.javacv.OpenCVFrameConverter;
 import org.bytedeco.javacv.OpenCVFrameConverter.ToMat;
 
 import javax.swing.*;
@@ -20,11 +18,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static java.lang.Math.round;
-import static org.bytedeco.javacpp.opencv_core.CV_8U;
-import static org.bytedeco.javacpp.opencv_core.minMaxLoc;
-import static org.bytedeco.javacpp.opencv_imgcodecs.IMREAD_COLOR;
-import static org.bytedeco.javacpp.opencv_imgcodecs.imread;
-import static org.bytedeco.javacpp.opencv_imgcodecs.imwrite;
+import static org.bytedeco.javacpp.opencv_core.*;
+import static org.bytedeco.javacpp.opencv_imgcodecs.*;
 import static org.bytedeco.javacpp.opencv_imgproc.circle;
 import static org.bytedeco.javacpp.opencv_imgproc.rectangle;
 
@@ -176,5 +171,23 @@ public class Helper {
 		Mat dest = new Mat();
 		src.convertTo(dest, CV_8U, scale, offset);
 		return dest;
+	}
+
+	/** Convert native vector to JVM array.
+	 *
+	 * @param matches pointer to a native vector containing DMatches.
+	 * @return
+	 */
+	public static DMatch[] toArray(DMatchVector matches) {
+		assert matches.size() <= Integer.MAX_VALUE;
+		// for the simplicity of the implementation we will assume that number of key points is within Int range.
+		int n = (int) matches.size();
+
+		// Convert keyPoints to Scala sequence
+		DMatch[] result = new DMatch[n];
+		for (int i = 0; i < n; i++) {
+			result[i] = new DMatch(matches.get(i));
+		}
+		return result;
 	}
 }
