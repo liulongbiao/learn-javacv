@@ -3,6 +3,7 @@
  */
 package cn.strong.plays.javacv;
 
+import org.bytedeco.javacpp.indexer.FloatIndexer;
 import org.bytedeco.javacpp.opencv_core.*;
 import org.bytedeco.javacpp.opencv_core.Point;
 import org.bytedeco.javacv.CanvasFrame;
@@ -16,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static java.lang.Math.round;
 import static org.bytedeco.javacpp.opencv_core.*;
@@ -189,5 +191,25 @@ public class Helper {
 			result[i] = new DMatch(matches.get(i));
 		}
 		return result;
+	}
+
+	/**
+	 * 将点的列表转换为 Mat
+	 *
+	 * @param points
+	 * @return
+     */
+	public static Mat toMatPoint3f(ArrayList<Point3f> points) {
+		// Create Mat representing a vector of Points3f
+		int sz = points.size();
+		Mat dest = new Mat(1, sz, CV_32FC3);
+		FloatIndexer indx = dest.createIndexer();
+		for (int i = 0; i < sz; i++) {
+			Point3f p = points.get(i);
+			indx.put(0, i, 0, p.x());
+			indx.put(0, i, 1, p.y());
+			indx.put(0, i, 2, p.z());
+		}
+		return dest;
 	}
 }
