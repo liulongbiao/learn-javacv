@@ -1,20 +1,26 @@
 package cn.strong.plays.javacv.ch07;
 
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_core.MatVector;
-import org.bytedeco.javacpp.opencv_core.Point;
-import org.bytedeco.javacpp.opencv_core.Scalar;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import static cn.strong.plays.javacv.Helper.load;
 import static cn.strong.plays.javacv.Helper.show;
 import static org.bytedeco.javacpp.opencv_core.CV_8UC3;
 import static org.bytedeco.javacpp.opencv_imgcodecs.IMREAD_COLOR;
 import static org.bytedeco.javacpp.opencv_imgcodecs.IMREAD_GRAYSCALE;
-import static org.bytedeco.javacpp.opencv_imgproc.*;
+import static org.bytedeco.javacpp.opencv_imgproc.CHAIN_APPROX_NONE;
+import static org.bytedeco.javacpp.opencv_imgproc.RETR_EXTERNAL;
+import static org.bytedeco.javacpp.opencv_imgproc.drawContours;
+import static org.bytedeco.javacpp.opencv_imgproc.findContours;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.bytedeco.javacpp.opencv_core.Mat;
+import org.bytedeco.javacpp.opencv_core.MatVector;
+import org.bytedeco.javacpp.opencv_core.Point;
+import org.bytedeco.javacpp.opencv_core.Scalar;
+
+import cn.strong.plays.javacv.utils.CppVectors;
+import cn.strong.plays.javacv.utils.MatVectors;
 
 /**
  * 提取轮廓线
@@ -40,14 +46,9 @@ public class Ex5ExtractContours {
         long lengthMin = 100;
         long lengthMax = 1000;
 
-        ArrayList<Mat> mats = new ArrayList<>();
-        for(long i = 0, sz = contours.size(); i < sz; i++) {
-            Mat contour = contours.get(i);
-            if(lengthMin < contour.total() && contour.total() < lengthMax) {
-                mats.add(contour);
-            }
-        }
-        MatVector filteredContours = new MatVector(mats.toArray(new Mat[0]));
+		// MatVector filteredContours = filter(contours, lengthMin, lengthMax);
+
+		MatVector filteredContours = filterStream(contours, lengthMin, lengthMax);
 
         Mat result2 = load(new File("data/group.jpg"), IMREAD_COLOR);
         drawContours(result2, filteredContours,
@@ -55,5 +56,24 @@ public class Ex5ExtractContours {
                 new Scalar(0, 0, 255, 0));
         show(result2, "Contours Filtered");
     }
+
+	private static MatVector filter(MatVector contours, long lengthMin, long lengthMax) {
+		ArrayList<Mat> mats = new ArrayList<>();
+		for (long i = 0, sz = contours.size(); i < sz; i++) {
+			Mat contour = contours.get(i);
+			if (lengthMin < contour.total() && contour.total() < lengthMax) {
+				mats.add(contour);
+			}
+		}
+		return new MatVector(mats.toArray(new Mat[0]));
+	}
+
+	private static MatVector filterStream(MatVector contours, long lengthMin, long lengthMax) {
+		return CppVectors.stream(MatVectors.asCppVector(contours))
+				.filter(contour -> {
+					long total = contour.total();
+					return lengthMin < total && total < lengthMax;
+				}).collect(CppVectors.collector(MatVectors::fromList));
+	}
 
 }
