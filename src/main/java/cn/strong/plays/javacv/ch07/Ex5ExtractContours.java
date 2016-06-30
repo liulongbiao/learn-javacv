@@ -47,6 +47,7 @@ public class Ex5ExtractContours {
         long lengthMax = 1000;
 
 		// MatVector filteredContours = filter(contours, lengthMin, lengthMax);
+		// MatVector filteredContours = filterIter(contours, lengthMin, lengthMax);
 
 		MatVector filteredContours = filterStream(contours, lengthMin, lengthMax);
 
@@ -61,7 +62,19 @@ public class Ex5ExtractContours {
 		ArrayList<Mat> mats = new ArrayList<>();
 		for (long i = 0, sz = contours.size(); i < sz; i++) {
 			Mat contour = contours.get(i);
-			if (lengthMin < contour.total() && contour.total() < lengthMax) {
+			long total = contour.total();
+			if (lengthMin < total && total < lengthMax) {
+				mats.add(contour);
+			}
+		}
+		return new MatVector(mats.toArray(new Mat[0]));
+	}
+
+	private static MatVector filterIter(MatVector contours, long lengthMin, long lengthMax) {
+		ArrayList<Mat> mats = new ArrayList<>();
+		for (Mat contour : MatVectors.asCppVector(contours)) {
+			long total = contour.total();
+			if (lengthMin < total && total < lengthMax) {
 				mats.add(contour);
 			}
 		}

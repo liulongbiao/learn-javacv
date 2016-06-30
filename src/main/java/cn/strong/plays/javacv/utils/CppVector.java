@@ -3,13 +3,16 @@
  */
 package cn.strong.plays.javacv.utils;
 
+import java.util.Iterator;
+import java.util.Objects;
+
 /**
  * CPP 向量
  * 
  * @author liulongbiao
  *
  */
-public interface CppVector<E> {
+public interface CppVector<E> extends Iterable<E> {
 
 	/**
 	 * 向量大小
@@ -33,4 +36,33 @@ public interface CppVector<E> {
 	 * @param item
 	 */
 	void set(long idx, E item);
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Iterable#iterator()
+	 */
+	default Iterator<E> iterator() {
+		return new Iter<>(this);
+	}
+
+	static class Iter<T> implements Iterator<T> {
+		final CppVector<T> vec;
+		long cursor = 0;
+
+		public Iter(CppVector<T> vec) {
+			this.vec = Objects.requireNonNull(vec);
+		}
+
+		@Override
+		public boolean hasNext() {
+			return cursor != vec.size();
+		}
+
+		@Override
+		public T next() {
+			return vec.get(cursor++);
+		}
+
+	}
 }
